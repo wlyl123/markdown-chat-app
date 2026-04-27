@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import { ArrowUp } from "lucide-react";
+import { SendHorizontal } from "lucide-react";
 import { FormEvent, KeyboardEvent, useState } from "react";
 
 interface ChatInputProps {
@@ -11,8 +11,8 @@ interface ChatInputProps {
 const ChatInput = ({ onSend, disabled }: ChatInputProps) => {
   const [message, setMessage] = useState("");
 
-  const handleSubmit = (e: FormEvent) => {
-    e.preventDefault();
+  const handleSubmit = (e?: FormEvent) => {
+    e?.preventDefault();
     if (message.trim()) {
       onSend(message);
       setMessage("");
@@ -22,31 +22,29 @@ const ChatInput = ({ onSend, disabled }: ChatInputProps) => {
   const handleKeyDown = (e: KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
-      handleSubmit(e);
+      handleSubmit();
     }
   };
 
   return (
-    <form onSubmit={handleSubmit} className="relative">
+    <form onSubmit={handleSubmit} className="flex gap-2 items-end">
       <Textarea
         value={message}
         onChange={(e) => setMessage(e.target.value)}
         onKeyDown={handleKeyDown}
-        placeholder="请输入您的问题或需求..."
+        placeholder="输入消息..."
         disabled={disabled}
-        rows={3}
-        className="w-full pr-12 rounded-2xl bg-muted/50 hover:bg-muted/70 border border-gray-200 focus-visible:ring-0 focus-visible:ring-offset-0 transition-colors resize-none"
+        rows={1}
+        className="min-h-[44px] max-h-32 pr-4 rounded-xl bg-background hover:bg-muted/50 border border-border focus-visible:ring-1 focus-visible:ring-primary transition-all resize-none py-3"
       />
-      {message.trim() && (
-        <Button 
-          type="submit" 
-          size="icon" 
-          disabled={disabled || !message.trim()} 
-          className="absolute right-2 bottom-2 rounded-full h-7 w-7 p-0 bg-primary hover:bg-primary/90"
-        >
-          <ArrowUp className="h-3 w-3" />
-        </Button>
-      )}
+      <Button 
+        type="submit" 
+        size="icon" 
+        disabled={disabled || !message.trim()} 
+        className="h-[44px] w-[44px] shrink-0 rounded-xl bg-primary hover:bg-primary/90 shadow-sm transition-all active:scale-95"
+      >
+        <SendHorizontal className="h-5 w-5" />
+      </Button>
     </form>
   );
 };
