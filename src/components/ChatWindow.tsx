@@ -57,7 +57,7 @@ const ChatWindow = () => {
                 <span className="text-2xl">💬</span>
               </div>
               <p className="text-lg font-medium">开始您的第一条对话</p>
-              <p className="text-sm">消息将保存在本地</p>
+              <p className="text-sm">支持 **Markdown** 语法渲染</p>
             </div>
           ) : (
             <>
